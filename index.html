@@ -3,82 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Word Journey RU</title>
+  <title>Внутренний Компас</title>
+
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
 
 <body>
   <main class="app">
-    <section id="screen-intro" class="screen active">
-      <div class="hero">
-        <p class="eyebrow">Word Journey RU</p>
-        <h1>Путешествие к своим главным словам</h1>
+
+    <section id="introScreen" class="screen active">
+      <div class="card hero-card">
+        <p class="eyebrow">Внутренний Компас</p>
+        <h1>Пять слов, которые сейчас ведут вас</h1>
         <p class="lead">
-          Выберите слова, которые откликаются вам сейчас.
-          В конце вы получите пять слов, отражающих ваше внутреннее направление.
+          Это упражнение поможет выбрать главные слова через несколько этапов:
+          притяжение, отбор, тень, противоположность и финальный выбор.
         </p>
 
-        <div class="info-card">
-          <p><strong>Время:</strong> 5–10 минут</p>
-          <p><strong>Формат:</strong> выбор слов по шагам</p>
-          <p><strong>Совет:</strong> отвечайте интуитивно, не слишком долго думая.</p>
+        <div class="notice">
+          <p><strong>Важно:</strong> это не психологический тест и не диагноз.</p>
+          <p>Это инструмент для саморефлексии и разговора с собой.</p>
         </div>
 
-        <button id="startBtn" class="primary-btn">Начать</button>
+        <button id="startBtn" class="btn primary">Начать путешествие</button>
       </div>
     </section>
 
-    <section id="screen-game" class="screen">
-      <header class="topbar">
+    <section id="journeyScreen" class="screen">
+      <header class="journey-header">
         <div>
-          <p id="stepLabel" class="step-label">Шаг 1</p>
-          <h2 id="stepTitle">Выберите слова</h2>
+          <p id="stageLabel" class="stage-label">Шаг 1</p>
+          <h2 id="stageTitle">Выберите слова</h2>
         </div>
-        <button id="resetBtn" class="ghost-btn">Сначала</button>
+        <button id="resetBtn" class="btn small ghost">Сначала</button>
       </header>
 
-      <div class="progress-wrap">
+      <div class="progress">
         <div id="progressBar" class="progress-bar"></div>
       </div>
 
-      <p id="stepDescription" class="description"></p>
+      <p id="stageDescription" class="stage-description"></p>
 
-      <div class="counter-card">
-        <span id="counterText">0 / 20</span>
+      <div class="status-row">
+        <div class="status-pill">
+          <span id="selectionCounter">0 / 20</span>
+        </div>
+        <div class="status-pill muted">
+          <span id="timerText">00:00</span>
+        </div>
       </div>
 
       <div id="wordGrid" class="word-grid"></div>
 
-      <div class="bottom-actions">
-        <button id="backBtn" class="secondary-btn">Назад</button>
-        <button id="nextBtn" class="primary-btn" disabled>Далее</button>
+      <div id="oppositePanel" class="opposite-panel hidden">
+        <p class="panel-title">Выберите противоположное слово</p>
+        <p id="currentNegativeWord" class="current-negative"></p>
+        <div id="oppositeOptions" class="opposite-options"></div>
       </div>
+
+      <nav class="bottom-nav">
+        <button id="backBtn" class="btn secondary">Назад</button>
+        <button id="nextBtn" class="btn primary" disabled>Далее</button>
+      </nav>
     </section>
 
-    <section id="screen-result" class="screen">
-      <div class="result-wrap">
-        <p class="eyebrow">Ваш результат</p>
-        <h1>Пять слов вашего пути</h1>
-        <p class="lead">
-          Эти слова не являются диагнозом или окончательным ответом.
-          Это мягкая подсказка о том, что сейчас важно для вас.
-        </p>
+    <section id="resultScreen" class="screen">
+      <div class="card result-card">
+        <p class="eyebrow">Результат</p>
+        <h1>Ваши пять слов</h1>
 
-        <div id="resultWords" class="result-words"></div>
+        <div id="finalWords" class="final-words"></div>
 
-        <div class="result-note">
-          <h3>Как с этим работать?</h3>
-          <p>
-            Выберите одно слово и спросите себя:
-            «Что я могу сделать сегодня, чтобы приблизиться к этому состоянию?»
-          </p>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <span class="summary-label">Общее время</span>
+            <strong id="totalDuration">—</strong>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">Самый долгий этап</span>
+            <strong id="slowestStage">—</strong>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">Больше всего колебаний</span>
+            <strong id="mostToggledStage">—</strong>
+          </div>
         </div>
 
-        <button id="copyBtn" class="secondary-btn">Скопировать результат</button>
-        <button id="restartBtn" class="primary-btn">Пройти ещё раз</button>
+        <section class="result-section">
+          <h2>Промпт для анализа</h2>
+          <p class="helper-text">
+            Скопируйте этот текст и отправьте его ChatGPT, чтобы получить глубокую интерпретацию.
+          </p>
+          <textarea id="promptOutput" readonly></textarea>
+          <button id="copyPromptBtn" class="btn secondary full">Скопировать промпт</button>
+        </section>
+
+        <section class="result-section">
+          <h2>Данные путешествия</h2>
+          <p class="helper-text">
+            Эти данные показывают не только итоговый выбор, но и путь: время, этапы и изменения.
+          </p>
+          <textarea id="jsonOutput" readonly></textarea>
+          <button id="copyJsonBtn" class="btn secondary full">Скопировать JSON</button>
+        </section>
+
+        <button id="copyAllBtn" class="btn primary full">Скопировать всё</button>
+        <button id="restartBtn" class="btn ghost full">Пройти заново</button>
+
+        <p class="disclaimer">
+          Анализ на основе этих данных должен использоваться только для саморефлексии.
+          Он не заменяет консультацию специалиста.
+        </p>
       </div>
     </section>
+
   </main>
 </body>
 </html>
