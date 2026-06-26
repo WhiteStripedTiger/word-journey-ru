@@ -1,11 +1,21 @@
 /* ==========================================================
    Inner Compass
-   script.js v2
+   script.js Final v3
+   5-file structure
 ========================================================== */
 
 let currentStageIndex = 0;
 let selectedMode = "reflection";
 let timerInterval = null;
+
+const $ = (id) => document.getElementById(id);
+
+const screens = {
+  language: $("languageScreen"),
+  intro: $("introScreen"),
+  journey: $("journeyScreen"),
+  result: $("resultScreen")
+};
 
 const state = {
   session: {
@@ -20,7 +30,11 @@ const state = {
   },
   selections: {
     positive_selected_20: [],
-    dropped_positive: { step1: [], step2: [], step3: [] },
+    dropped_positive: {
+      step1: [],
+      step2: [],
+      step3: []
+    },
     positive_core_5: [],
     negative_selected_10: [],
     dropped_negative: [],
@@ -30,15 +44,6 @@ const state = {
   },
   stageData: {},
   timeline: []
-};
-
-const $ = (id) => document.getElementById(id);
-
-const screens = {
-  language: $("languageScreen"),
-  intro: $("introScreen"),
-  journey: $("journeyScreen"),
-  result: $("resultScreen")
 };
 
 function now() {
@@ -68,7 +73,19 @@ function getStage() {
 }
 
 function stageName(id) {
-  return STAGES.find((s) => s.id === id)?.title?.[UI_LANG] || id;
+  return STAGES.find((stage) => stage.id === id)?.title?.[UI_LANG] || id;
+}
+
+function getAnyWordById(id) {
+  return getPositiveById(id) || getNegativeById(id);
+}
+
+function wordTextById(id) {
+  return getWordText(getAnyWordById(id));
+}
+
+function idsToTexts(ids) {
+  return ids.map(wordTextById);
 }
 
 function initStageData(stageId) {
@@ -89,24 +106,25 @@ function finishStageData(stageId) {
   data.duration_ms = elapsed() - data.started_at_ms;
 }
 
-function logAction(action, word, stageId) {
+function logAction(action, wordId, stageId) {
   state.timeline.push({
     time_ms: elapsed(),
     time: formatTime(elapsed()),
     action,
-    word_id: word.id,
-    word: getWordText(word),
+    word_id: wordId,
     stage: stageId
   });
 }
 
-function toggleFromList(list, word) {
-  const index = list.findIndex((item) => item.id === word.id);
+function toggleId(list, id) {
+  const index = list.indexOf(id);
+
   if (index >= 0) {
     list.splice(index, 1);
     return false;
   }
-  list.push(word);
+
+  list.push(id);
   return true;
 }
 
@@ -124,51 +142,64 @@ function getCurrentSelectionList() {
   return [];
 }
 
+function positiveIdsToWords(ids) {
+  return ids.map(getPositiveById).filter(Boolean);
+}
+
+function negativeIdsToWords(ids) {
+  return ids.map(getNegativeById).filter(Boolean);
+}
+
 function getWordsForStage() {
   const stage = getStage();
 
   if (stage.id === "positive_select") return POSITIVE_WORDS;
 
   if (stage.id === "positive_drop_1") {
-    return state.selections.positive_selected_20;
+    return positiveIdsToWords(state.selections.positive_selected_20);
   }
 
   if (stage.id === "positive_drop_2") {
-    return state.selections.positive_selected_20.filter(
-      (word) => !state.selections.dropped_positive.step1.some((w) => w.id === word.id)
+    const ids = state.selections.positive_selected_20.filter(
+      (id) => !state.selections.dropped_positive.step1.includes(id)
     );
+    return positiveIdsToWords(ids);
   }
 
   if (stage.id === "positive_drop_3") {
-    return state.selections.positive_selected_20.filter(
-      (word) =>
-        !state.selections.dropped_positive.step1.some((w) => w.id === word.id) &&
-        !state.selections.dropped_positive.step2.some((w) => w.id === word.id)
+    const ids = state.selections.positive_selected_20.filter(
+      (id) =>
+        !state.selections.dropped_positive.step1.includes(id) &&
+        !state.selections.dropped_positive.step2.includes(id)
     );
+    return positiveIdsToWords(ids);
   }
 
   if (stage.id === "negative_select") return NEGATIVE_WORDS;
 
-  if (stage.id === "negative_drop") return state.selections.negative_selected_10;
+  if (stage.id === "negative_drop") {
+    return negativeIdsToWords(state.selections.negative_selected_10);
+  }
 
   if (stage.id === "final_select") {
-    const oppositeWords = state.selections.opposite_choices
-      .map((choice) => getPositiveById(choice.chosen_opposite_id))
-      .filter(Boolean);
+    const oppositeIds = state.selections.opposite_choices.map(
+      (choice) => choice.chosen_opposite_id
+    );
 
-    return [...state.selections.positive_core_5, ...oppositeWords];
+    const ids = [...state.selections.positive_core_5, ...oppositeIds];
+    return positiveIdsToWords(ids);
   }
 
   return [];
 }
 
 function updateFlowTabs() {
-  const stage = getStage().id;
+  const stageId = getStage().id;
 
-  $("flowPositive").classList.toggle("active", stage.startsWith("positive"));
-  $("flowNegative").classList.toggle("active", stage.startsWith("negative"));
-  $("flowOpposite").classList.toggle("active", stage === "opposite_select");
-  $("flowFinal").classList.toggle("active", stage === "final_select");
+  $("flowPositive").classList.toggle("active", stageId.startsWith("positive"));
+  $("flowNegative").classList.toggle("active", stageId.startsWith("negative"));
+  $("flowOpposite").classList.toggle("active", stageId === "opposite_select");
+  $("flowFinal").classList.toggle("active", stageId === "final_select");
 }
 
 function renderStage() {
@@ -195,7 +226,7 @@ function renderStage() {
 function renderWordGrid() {
   const stage = getStage();
   const words = getWordsForStage();
-  const selected = getCurrentSelectionList();
+  const selectedIds = getCurrentSelectionList();
 
   $("wordGrid").innerHTML = "";
 
@@ -208,19 +239,19 @@ function renderWordGrid() {
       button.classList.add("negative");
     }
 
-    if (selected.some((item) => item.id === word.id)) {
+    if (selectedIds.includes(word.id)) {
       button.classList.add("selected");
     }
 
     button.addEventListener("click", () => {
       const list = getCurrentSelectionList();
-      const alreadySelected = list.some((item) => item.id === word.id);
+      const alreadySelected = list.includes(word.id);
 
       if (!alreadySelected && list.length >= stage.limit) return;
 
-      const added = toggleFromList(list, word);
+      const added = toggleId(list, word.id);
       state.stageData[stage.id].total_toggles += 1;
-      logAction(added ? "select" : "remove", word, stage.id);
+      logAction(added ? "select" : "remove", word.id, stage.id);
 
       renderStage();
     });
@@ -233,37 +264,36 @@ function renderOppositeStage() {
   $("wordGrid").innerHTML = "";
   $("oppositePanel").classList.remove("hidden");
 
-  const negatives = state.selections.negative_core_5;
+  const negativeIds = state.selections.negative_core_5;
   const currentIndex = state.selections.opposite_choices.length;
-  const currentNegative = negatives[currentIndex];
+  const currentNegativeId = negativeIds[currentIndex];
 
-  if (!currentNegative) {
+  if (!currentNegativeId) {
     updateButtons();
     return;
   }
 
-  $("currentNegativeWord").textContent = getWordText(currentNegative);
+  $("currentNegativeWord").textContent = wordTextById(currentNegativeId);
   $("oppositeOptions").innerHTML = "";
 
-  const candidates = (OPPOSITE_MAP[currentNegative.id] || [])
-    .map((id) => getPositiveById(id))
-    .filter(Boolean);
+  const candidateIds = OPPOSITE_MAP[currentNegativeId] || [];
 
-  candidates.forEach((word) => {
+  candidateIds.forEach((positiveId) => {
+    const word = getPositiveById(positiveId);
+    if (!word) return;
+
     const button = document.createElement("button");
     button.className = "opposite-option";
     button.textContent = getWordText(word);
 
     button.addEventListener("click", () => {
       state.selections.opposite_choices.push({
-        negative_id: currentNegative.id,
-        negative: getWordText(currentNegative),
-        chosen_opposite_id: word.id,
-        chosen_opposite: getWordText(word)
+        negative_id: currentNegativeId,
+        chosen_opposite_id: positiveId
       });
 
       state.stageData.opposite_select.total_toggles += 1;
-      logAction("choose_opposite", word, "opposite_select");
+      logAction("choose_opposite", positiveId, "opposite_select");
 
       renderStage();
     });
@@ -287,18 +317,18 @@ function updateButtons() {
 }
 
 function calculateCores() {
-  const dropped = [
+  const droppedPositive = [
     ...state.selections.dropped_positive.step1,
     ...state.selections.dropped_positive.step2,
     ...state.selections.dropped_positive.step3
   ];
 
   state.selections.positive_core_5 = state.selections.positive_selected_20.filter(
-    (word) => !dropped.some((d) => d.id === word.id)
+    (id) => !droppedPositive.includes(id)
   );
 
   state.selections.negative_core_5 = state.selections.negative_selected_10.filter(
-    (word) => !state.selections.dropped_negative.some((d) => d.id === word.id)
+    (id) => !state.selections.dropped_negative.includes(id)
   );
 }
 
@@ -352,25 +382,70 @@ function finishJourney() {
   showScreen("result");
 }
 
+function localizeOppositeChoices() {
+  return state.selections.opposite_choices.map((choice) => ({
+    negative_id: choice.negative_id,
+    negative: wordTextById(choice.negative_id),
+    chosen_opposite_id: choice.chosen_opposite_id,
+    chosen_opposite: wordTextById(choice.chosen_opposite_id)
+  }));
+}
+
+function localizeTimeline() {
+  return state.timeline.map((item) => ({
+    time_ms: item.time_ms,
+    time: item.time,
+    action: item.action,
+    word_id: item.word_id,
+    word: wordTextById(item.word_id),
+    stage: item.stage
+  }));
+}
+
 function getJourneyData() {
   return {
-    final_positive_5: state.selections.final_positive_5.map(getWordText),
+    language: UI_LANG,
+    final_positive_5_ids: state.selections.final_positive_5,
+    final_positive_5: idsToTexts(state.selections.final_positive_5),
+
     journey: {
-      positive_selected_20: state.selections.positive_selected_20.map(getWordText),
-      dropped_positive: {
-        step1: state.selections.dropped_positive.step1.map(getWordText),
-        step2: state.selections.dropped_positive.step2.map(getWordText),
-        step3: state.selections.dropped_positive.step3.map(getWordText)
+      positive_selected_20_ids: state.selections.positive_selected_20,
+      positive_selected_20: idsToTexts(state.selections.positive_selected_20),
+
+      dropped_positive_ids: {
+        step1: state.selections.dropped_positive.step1,
+        step2: state.selections.dropped_positive.step2,
+        step3: state.selections.dropped_positive.step3
       },
-      positive_core_5: state.selections.positive_core_5.map(getWordText),
-      negative_selected_10: state.selections.negative_selected_10.map(getWordText),
-      dropped_negative: state.selections.dropped_negative.map(getWordText),
-      negative_core_5: state.selections.negative_core_5.map(getWordText),
-      opposite_choices: state.selections.opposite_choices,
-      timeline: state.timeline
+      dropped_positive: {
+        step1: idsToTexts(state.selections.dropped_positive.step1),
+        step2: idsToTexts(state.selections.dropped_positive.step2),
+        step3: idsToTexts(state.selections.dropped_positive.step3)
+      },
+
+      positive_core_5_ids: state.selections.positive_core_5,
+      positive_core_5: idsToTexts(state.selections.positive_core_5),
+
+      negative_selected_10_ids: state.selections.negative_selected_10,
+      negative_selected_10: idsToTexts(state.selections.negative_selected_10),
+
+      dropped_negative_ids: state.selections.dropped_negative,
+      dropped_negative: idsToTexts(state.selections.dropped_negative),
+
+      negative_core_5_ids: state.selections.negative_core_5,
+      negative_core_5: idsToTexts(state.selections.negative_core_5),
+
+      opposite_choices: localizeOppositeChoices(),
+      opposite_choice_ids: state.selections.opposite_choices,
+
+      timeline: localizeTimeline()
     },
+
     stage_summaries: Object.values(state.stageData),
-    session: state.session
+    session: {
+      ...state.session,
+      language: UI_LANG
+    }
   };
 }
 
@@ -534,10 +609,10 @@ function buildPrompt() {
 function showResult() {
   $("finalWords").innerHTML = "";
 
-  state.selections.final_positive_5.forEach((word) => {
+  state.selections.final_positive_5.forEach((id) => {
     const div = document.createElement("div");
     div.className = "final-word";
-    div.textContent = getWordText(word);
+    div.textContent = wordTextById(id);
     $("finalWords").appendChild(div);
   });
 
@@ -561,7 +636,7 @@ function renderTimeline() {
   state.timeline.forEach((item) => {
     const div = document.createElement("div");
     div.className = "timeline-item";
-    div.innerHTML = `<strong>${item.time} · ${stageName(item.stage)}</strong>${item.action}: ${item.word}`;
+    div.innerHTML = `<strong>${item.time} · ${stageName(item.stage)}</strong>${item.action}: ${wordTextById(item.word_id)}`;
     $("timelineOutput").appendChild(div);
   });
 }
