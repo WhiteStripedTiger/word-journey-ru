@@ -4,41 +4,66 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Внутренний Компас</title>
-  <meta
-    name="description"
-    content="Внутренний Компас — упражнение для выбора ключевых слов, саморефлексии и AI-анализа внутреннего пути."
-  />
+  <title>Inner Compass</title>
+  <meta name="description" content="A multilingual inner journey web app for word-based self-reflection and AI analysis." />
 
   <link rel="stylesheet" href="style.css" />
 
+  <script src="i18n.js" defer></script>
   <script src="constants.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 
 <body>
-  <main class="app" id="app">
+  <main id="app" class="app">
+
+    <!-- LANGUAGE -->
+    <section id="languageScreen" class="screen active">
+      <div class="card hero-card">
+        <p class="eyebrow" data-i18n="appName"></p>
+        <h1 data-i18n="languageTitle"></h1>
+        <p class="lead" data-i18n="languageDescription"></p>
+
+        <div class="language-grid">
+          <button class="language-card" data-language="ru">
+            <strong>Русский</strong>
+            <span>Продолжить на русском</span>
+          </button>
+
+          <button class="language-card" data-language="ko">
+            <strong>한국어</strong>
+            <span>한국어로 계속하기</span>
+          </button>
+
+          <button class="language-card" data-language="en">
+            <strong>English</strong>
+            <span>Continue in English</span>
+          </button>
+        </div>
+      </div>
+    </section>
 
     <!-- INTRO -->
-    <section id="introScreen" class="screen active">
+    <section id="introScreen" class="screen">
+      <div class="top-controls">
+        <select id="languageSelect" class="language-select" aria-label="Language">
+          <option value="ru">Русский</option>
+          <option value="ko">한국어</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
       <div class="card hero-card">
-        <p class="eyebrow">Внутренний Компас</p>
-
-        <h1>Пять слов, которые сейчас ведут вас</h1>
-
-        <p class="lead">
-          Пройдите путь выбора слов: притяжение, отбор, тень,
-          противоположность и финальный внутренний компас.
-        </p>
+        <p class="eyebrow" data-i18n="appName"></p>
+        <h1 data-i18n="introTitle"></h1>
+        <p class="lead" data-i18n="introDescription"></p>
 
         <div class="notice">
-          <p><strong>Важно:</strong> это не психологический тест и не диагноз.</p>
-          <p>Это упражнение для саморефлексии и бережного разговора с собой.</p>
+          <p data-i18n="introNotice1"></p>
+          <p data-i18n="introNotice2"></p>
         </div>
 
-        <button id="startBtn" class="btn primary full">
-          Начать путешествие
-        </button>
+        <button id="startBtn" class="btn primary full" data-i18n="startButton"></button>
       </div>
     </section>
 
@@ -46,20 +71,18 @@
     <section id="journeyScreen" class="screen">
       <header class="journey-header">
         <div>
-          <p id="stageLabel" class="stage-label">Шаг 1 / 8</p>
-          <h2 id="stageTitle">Выберите слова</h2>
+          <p id="stageLabel" class="stage-label"></p>
+          <h2 id="stageTitle"></h2>
         </div>
 
-        <button id="resetBtn" class="btn small ghost">
-          Сначала
-        </button>
+        <button id="resetBtn" class="btn small ghost" data-i18n="resetButton"></button>
       </header>
 
-      <div class="flow-tabs" aria-label="Journey flow">
-        <span id="flowPositive" class="flow-tab active">Притяжение</span>
-        <span id="flowNegative" class="flow-tab">Тень</span>
-        <span id="flowOpposite" class="flow-tab">Противоположность</span>
-        <span id="flowFinal" class="flow-tab">Финал</span>
+      <div class="flow-tabs">
+        <span id="flowPositive" class="flow-tab active" data-i18n="flowPositive"></span>
+        <span id="flowNegative" class="flow-tab" data-i18n="flowNegative"></span>
+        <span id="flowOpposite" class="flow-tab" data-i18n="flowOpposite"></span>
+        <span id="flowFinal" class="flow-tab" data-i18n="flowFinal"></span>
       </div>
 
       <div class="progress">
@@ -70,7 +93,7 @@
 
       <div class="status-row">
         <div class="status-pill">
-          <span id="selectionCounter">0 / 20</span>
+          <span id="selectionCounter"></span>
         </div>
 
         <div class="status-pill muted">
@@ -78,163 +101,131 @@
         </div>
       </div>
 
-      <section id="wordGrid" class="word-grid" aria-label="Word choices"></section>
+      <section id="wordGrid" class="word-grid"></section>
 
       <section id="oppositePanel" class="opposite-panel hidden">
-        <p class="panel-title">Выберите противоположное слово</p>
+        <p class="panel-title" data-i18n="oppositePanelTitle"></p>
         <p id="currentNegativeWord" class="current-negative"></p>
         <div id="oppositeOptions" class="opposite-options"></div>
       </section>
 
       <nav class="bottom-nav">
-        <button id="backBtn" class="btn secondary">
-          Назад
-        </button>
-
-        <button id="nextBtn" class="btn primary" disabled>
-          Далее
-        </button>
+        <button id="backBtn" class="btn secondary" data-i18n="backButton"></button>
+        <button id="nextBtn" class="btn primary" data-i18n="nextButton" disabled></button>
       </nav>
     </section>
 
     <!-- RESULT -->
     <section id="resultScreen" class="screen">
-      <div class="card result-card">
-        <p class="eyebrow">Результат</p>
+      <div class="top-controls">
+        <select id="resultLanguageSelect" class="language-select" aria-label="Language">
+          <option value="ru">Русский</option>
+          <option value="ko">한국어</option>
+          <option value="en">English</option>
+        </select>
+      </div>
 
-        <h1>Ваши пять слов</h1>
+      <div class="card result-card">
+        <p class="eyebrow" data-i18n="resultEyebrow"></p>
+        <h1 data-i18n="resultTitle"></h1>
 
         <div id="finalWords" class="final-words"></div>
 
-        <!-- SUMMARY -->
         <section class="result-section">
-          <h2>Краткое резюме пути</h2>
+          <h2 data-i18n="summaryTitle"></h2>
 
           <div class="summary-grid">
             <div class="summary-card">
-              <span class="summary-label">Общее время</span>
+              <span class="summary-label" data-i18n="totalTimeLabel"></span>
               <strong id="totalDuration">—</strong>
             </div>
 
             <div class="summary-card">
-              <span class="summary-label">Самый долгий этап</span>
+              <span class="summary-label" data-i18n="slowestStageLabel"></span>
               <strong id="slowestStage">—</strong>
             </div>
 
             <div class="summary-card">
-              <span class="summary-label">Больше всего колебаний</span>
+              <span class="summary-label" data-i18n="mostToggledStageLabel"></span>
               <strong id="mostToggledStage">—</strong>
             </div>
           </div>
         </section>
 
-        <!-- AI MODE -->
         <section class="result-section">
-          <h2>Режим AI-анализа</h2>
+          <h2 data-i18n="analysisModeTitle"></h2>
+          <p class="helper-text" data-i18n="analysisModeDescription"></p>
 
-          <p class="helper-text">
-            Выберите стиль интерпретации. Данные останутся теми же,
-            изменится только способ анализа.
-          </p>
-
-          <div class="mode-grid" id="analysisModeGrid">
+          <div id="analysisModeGrid" class="mode-grid">
             <button class="mode-card active" data-mode="reflection">
-              <strong>🌿 Рефлексия</strong>
-              <span>Тёплый и бережный разбор</span>
+              <strong data-i18n="modeReflectionTitle"></strong>
+              <span data-i18n="modeReflectionDescription"></span>
             </button>
 
             <button class="mode-card" data-mode="psychology">
-              <strong>🧠 Психология</strong>
-              <span>Мотивы, конфликты, паттерны</span>
+              <strong data-i18n="modePsychologyTitle"></strong>
+              <span data-i18n="modePsychologyDescription"></span>
             </button>
 
             <button class="mode-card" data-mode="relationship">
-              <strong>❤️ Отношения</strong>
-              <span>Близость, границы, связь</span>
+              <strong data-i18n="modeRelationshipTitle"></strong>
+              <span data-i18n="modeRelationshipDescription"></span>
             </button>
 
             <button class="mode-card" data-mode="career">
-              <strong>💼 Карьера</strong>
-              <span>Работа, роль, сильные стороны</span>
+              <strong data-i18n="modeCareerTitle"></strong>
+              <span data-i18n="modeCareerDescription"></span>
             </button>
 
             <button class="mode-card" data-mode="literary">
-              <strong>✍️ Литературно</strong>
-              <span>Поэтичная история человека</span>
+              <strong data-i18n="modeLiteraryTitle"></strong>
+              <span data-i18n="modeLiteraryDescription"></span>
             </button>
           </div>
         </section>
 
-        <!-- PROMPT -->
         <section class="result-section">
-          <h2>Промпт для анализа</h2>
-
-          <p class="helper-text">
-            Скопируйте этот текст и отправьте его ChatGPT или другой AI-системе.
-          </p>
+          <h2 data-i18n="promptTitle"></h2>
+          <p class="helper-text" data-i18n="promptDescription"></p>
 
           <pre class="code-box"><code id="promptOutput"></code></pre>
 
-          <button id="copyPromptBtn" class="btn secondary full">
-            Скопировать промпт
-          </button>
+          <button id="copyPromptBtn" class="btn secondary full" data-i18n="copyPromptButton"></button>
         </section>
 
-        <!-- JSON -->
         <section class="result-section">
           <details class="details-box" open>
-            <summary>Данные путешествия JSON</summary>
-
-            <p class="helper-text">
-              Эти данные включают итоговые слова, этапы, время, переключения и путь выбора.
-            </p>
+            <summary data-i18n="jsonTitle"></summary>
+            <p class="helper-text" data-i18n="jsonDescription"></p>
 
             <pre class="code-box"><code id="jsonOutput"></code></pre>
 
-            <button id="copyJsonBtn" class="btn secondary full">
-              Скопировать JSON
-            </button>
+            <button id="copyJsonBtn" class="btn secondary full" data-i18n="copyJsonButton"></button>
           </details>
         </section>
 
-        <!-- TIMELINE -->
         <section class="result-section">
           <details class="details-box">
-            <summary>Decision Timeline</summary>
-
-            <p class="helper-text">
-              Хронология выбора слов. Полезно для более глубокого анализа и отладки.
-            </p>
+            <summary data-i18n="timelineTitle"></summary>
+            <p class="helper-text" data-i18n="timelineDescription"></p>
 
             <div id="timelineOutput" class="timeline-output"></div>
           </details>
         </section>
 
-        <!-- DEVELOPER PANEL -->
         <section class="result-section">
           <details class="details-box">
-            <summary>Developer Data</summary>
-
-            <p class="helper-text">
-              Техническая аналитика: счётчики, стадии, категории и служебные данные.
-            </p>
+            <summary data-i18n="developerTitle"></summary>
+            <p class="helper-text" data-i18n="developerDescription"></p>
 
             <pre class="code-box"><code id="developerOutput"></code></pre>
           </details>
         </section>
 
-        <button id="copyAllBtn" class="btn primary full">
-          Скопировать всё
-        </button>
+        <button id="copyAllBtn" class="btn primary full" data-i18n="copyAllButton"></button>
+        <button id="restartBtn" class="btn ghost full" data-i18n="restartButton"></button>
 
-        <button id="restartBtn" class="btn ghost full">
-          Пройти заново
-        </button>
-
-        <p class="disclaimer">
-          Интерпретация по этим данным предназначена только для саморефлексии.
-          Она не является диагнозом и не заменяет помощь специалиста.
-        </p>
+        <p class="disclaimer" data-i18n="disclaimer"></p>
       </div>
     </section>
 
