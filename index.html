@@ -5,19 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Inner Compass</title>
-  <meta name="description" content="A multilingual inner journey web app for word-based self-reflection and AI analysis." />
+  <meta
+    name="description"
+    content="A multilingual inner journey web app for word-based self-reflection and AI analysis."
+  />
 
   <link rel="stylesheet" href="style.css" />
 
   <script src="i18n.js" defer></script>
   <script src="constants.js" defer></script>
-  <script src="script.js" defer></script>
+
+  <script src="utils.js" defer></script>
+  <script src="state.js" defer></script>
+  <script src="journey.js" defer></script>
+  <script src="render.js" defer></script>
+  <script src="prompt.js" defer></script>
+  <script src="app.js" defer></script>
 </head>
 
 <body>
   <main id="app" class="app">
 
-    <!-- LANGUAGE -->
     <section id="languageScreen" class="screen active">
       <div class="card hero-card">
         <p class="eyebrow" data-i18n="appName"></p>
@@ -43,7 +51,6 @@
       </div>
     </section>
 
-    <!-- INTRO -->
     <section id="introScreen" class="screen">
       <div class="top-controls">
         <select id="languageSelect" class="language-select" aria-label="Language">
@@ -67,7 +74,6 @@
       </div>
     </section>
 
-    <!-- JOURNEY -->
     <section id="journeyScreen" class="screen">
       <header class="journey-header">
         <div>
@@ -115,7 +121,6 @@
       </nav>
     </section>
 
-    <!-- RESULT -->
     <section id="resultScreen" class="screen">
       <div class="top-controls">
         <select id="resultLanguageSelect" class="language-select" aria-label="Language">
