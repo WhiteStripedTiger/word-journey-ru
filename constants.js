@@ -1,92 +1,37 @@
 /* ==========================================================
    Внутренний Компас
    constants.js
-   Version 2.0
-========================================================== */
-
-
-/* ==========================================================
-   APP INFO
+   Stable Lexicon Version 1.0
 ========================================================== */
 
 const APP = {
   name: "Внутренний Компас",
-  version: "2.0.0",
+  version: "1.0.0",
   defaultLanguage: "ru",
   supportedLanguages: ["ru", "ko", "en"]
 };
 
-
-/* ==========================================================
-   CATEGORIES
-========================================================== */
+const UI_LANG = "ru";
 
 const CATEGORIES = {
-  relationship: {
-    ru: "Отношения",
-    ko: "관계",
-    en: "Relationships"
-  },
-  self: {
-    ru: "Самость",
-    ko: "자기",
-    en: "Self"
-  },
-  growth: {
-    ru: "Развитие",
-    ko: "성장",
-    en: "Growth"
-  },
-  freedom: {
-    ru: "Свобода",
-    ko: "자유",
-    en: "Freedom"
-  },
-  emotion: {
-    ru: "Эмоции",
-    ko: "감정",
-    en: "Emotion"
-  },
-  creation: {
-    ru: "Творчество",
-    ko: "창조",
-    en: "Creation"
-  },
-  achievement: {
-    ru: "Достижение",
-    ko: "성취",
-    en: "Achievement"
-  },
-  justice: {
-    ru: "Справедливость",
-    ko: "정의",
-    en: "Justice"
-  },
-  stability: {
-    ru: "Стабильность",
-    ko: "안정",
-    en: "Stability"
-  },
-  wisdom: {
-    ru: "Мудрость",
-    ko: "지혜",
-    en: "Wisdom"
-  }
+  relationship: { ru: "Отношения", ko: "관계", en: "Relationships" },
+  self: { ru: "Самость", ko: "자기", en: "Self" },
+  freedom: { ru: "Свобода", ko: "자유", en: "Freedom" },
+  growth: { ru: "Развитие", ko: "성장", en: "Growth" },
+  creation: { ru: "Творчество", ko: "창조", en: "Creation" },
+  achievement: { ru: "Достижение", ko: "성취", en: "Achievement" },
+  stability: { ru: "Стабильность", ko: "안정", en: "Stability" },
+  justice: { ru: "Справедливость", ko: "정의", en: "Justice" },
+  wisdom: { ru: "Мудрость", ko: "지혜", en: "Wisdom" },
+  emotion: { ru: "Эмоции", ko: "감정", en: "Emotion" },
+  nature: { ru: "Природа", ko: "자연", en: "Nature" },
+  lifestyle: { ru: "Образ жизни", ko: "삶의 방식", en: "Lifestyle" }
 };
-
-
-/* ==========================================================
-   STAGES
-========================================================== */
 
 const STAGES = [
   {
     id: "positive_select",
-    title: {
-      ru: "Выберите 20 слов",
-      ko: "긍정 단어 20개 선택",
-      en: "Choose 20 positive words"
-    },
+    title: { ru: "Выберите 20 слов", ko: "긍정 단어 20개 선택", en: "Choose 20 words" },
     description: {
       ru: "Выберите 20 слов, которые сейчас особенно откликаются вам.",
       ko: "지금 나에게 특히 와닿는 긍정 단어 20개를 선택하세요.",
@@ -95,78 +40,53 @@ const STAGES = [
     limit: 20,
     mode: "select"
   },
-
   {
     id: "positive_drop_1",
-    title: {
-      ru: "Уберите 5 слов",
-      ko: "5개 덜어내기",
-      en: "Remove 5 words"
-    },
+    title: { ru: "Уберите 5 слов", ko: "5개 덜어내기", en: "Remove 5 words" },
     description: {
-      ru: "Из выбранных слов уберите 5, которые сейчас кажутся менее важными.",
-      ko: "선택한 단어 중 지금은 덜 중요하게 느껴지는 5개를 덜어내세요.",
-      en: "Remove 5 words that feel less important right now."
+      ru: "Из выбранных 20 слов уберите 5, которые сейчас кажутся менее важными.",
+      ko: "선택한 20개 중 지금 덜 중요하게 느껴지는 5개를 덜어내세요.",
+      en: "Remove 5 words that feel less important now."
     },
     limit: 5,
     mode: "drop"
   },
-
   {
     id: "positive_drop_2",
-    title: {
-      ru: "Уберите ещё 5 слов",
-      ko: "다시 5개 덜어내기",
-      en: "Remove 5 more words"
-    },
+    title: { ru: "Уберите ещё 5 слов", ko: "다시 5개 덜어내기", en: "Remove 5 more words" },
     description: {
-      ru: "Снова уберите 5 слов. Оставьте только те, которые сильнее держатся внутри.",
-      ko: "다시 5개를 덜어내세요. 더 강하게 남는 단어만 유지하세요.",
-      en: "Remove 5 more words. Keep only the ones that stay stronger inside."
+      ru: "Снова уберите 5 слов. Оставьте то, что сильнее держится внутри.",
+      ko: "다시 5개를 덜어내고 더 강하게 남는 단어를 유지하세요.",
+      en: "Remove 5 more words. Keep what stays stronger inside."
     },
     limit: 5,
     mode: "drop"
   },
-
   {
     id: "positive_drop_3",
-    title: {
-      ru: "Оставьте 5 главных слов",
-      ko: "핵심 긍정 단어 5개 남기기",
-      en: "Keep 5 core words"
-    },
+    title: { ru: "Оставьте 5 главных слов", ko: "핵심 긍정 단어 5개", en: "Keep 5 core words" },
     description: {
       ru: "Последний отбор: уберите 5 слов и оставьте 5 самых живых.",
       ko: "마지막으로 5개를 덜어내고 가장 살아있는 5개를 남기세요.",
-      en: "Final reduction: remove 5 words and keep the 5 most alive."
+      en: "Final reduction: remove 5 and keep the 5 most alive."
     },
     limit: 5,
     mode: "drop"
   },
-
   {
     id: "negative_select",
-    title: {
-      ru: "Выберите 10 теневых слов",
-      ko: "부정 단어 10개 선택",
-      en: "Choose 10 shadow words"
-    },
+    title: { ru: "Выберите 10 теневых слов", ko: "부정 단어 10개 선택", en: "Choose 10 shadow words" },
     description: {
-      ru: "Выберите 10 слов, которые вызывают отторжение, боль, злость или внутреннее сопротивление.",
-      ko: "거부감, 아픔, 분노, 내적 저항을 일으키는 단어 10개를 선택하세요.",
-      en: "Choose 10 words that evoke rejection, pain, anger, or inner resistance."
+      ru: "Выберите 10 слов, которые вызывают сопротивление, боль, злость или отторжение.",
+      ko: "저항감, 아픔, 분노, 거부감을 일으키는 단어 10개를 선택하세요.",
+      en: "Choose 10 words that evoke resistance, pain, anger, or rejection."
     },
     limit: 10,
     mode: "select_negative"
   },
-
   {
     id: "negative_drop",
-    title: {
-      ru: "Оставьте 5 самых сильных теней",
-      ko: "가장 강한 부정 단어 5개 남기기",
-      en: "Keep 5 strongest shadow words"
-    },
+    title: { ru: "Оставьте 5 самых сильных теней", ko: "부정 단어 5개 남기기", en: "Keep 5 strongest shadows" },
     description: {
       ru: "Уберите 5 слов и оставьте те, с которыми особенно хочется разобраться.",
       ko: "5개를 덜어내고 특히 마주하고 싶은 단어를 남기세요.",
@@ -175,14 +95,9 @@ const STAGES = [
     limit: 5,
     mode: "drop_negative"
   },
-
   {
     id: "opposite_select",
-    title: {
-      ru: "Выберите противоположности",
-      ko: "반대편 긍정 단어 선택",
-      en: "Choose opposites"
-    },
+    title: { ru: "Выберите противоположности", ko: "반대편 긍정 단어 선택", en: "Choose opposites" },
     description: {
       ru: "Для каждого теневого слова выберите положительную противоположность.",
       ko: "각 부정 단어의 반대편에 있는 긍정 단어를 선택하세요.",
@@ -191,1337 +106,260 @@ const STAGES = [
     limit: 5,
     mode: "opposite"
   },
-
   {
     id: "final_select",
-    title: {
-      ru: "Выберите финальные 5 слов",
-      ko: "최종 5개 선택",
-      en: "Choose final 5 words"
-    },
+    title: { ru: "Выберите финальные 5 слов", ko: "최종 5개 선택", en: "Choose final 5 words" },
     description: {
-      ru: "Перед вами слова, прошедшие весь путь. Выберите 5 слов, которые сейчас точнее всего описывают ваш внутренний компас.",
-      ko: "여정을 통과한 단어들 중 지금 나의 내면 나침반을 가장 잘 보여주는 5개를 선택하세요.",
-      en: "Choose 5 words that best describe your inner compass right now."
+      ru: "Выберите 5 слов, которые сейчас точнее всего описывают ваш внутренний компас.",
+      ko: "지금 나의 내면 나침반을 가장 잘 보여주는 5개를 선택하세요.",
+      en: "Choose 5 words that best describe your inner compass now."
     },
     limit: 5,
     mode: "final"
   }
 ];
 
-
-/* ==========================================================
-   POSITIVE WORDS
-   v2 Part 1
-========================================================== */
-
 const POSITIVE_WORDS = [
-  {
-    id: "love",
-    text: {
-      ru: "Любовь",
-      ko: "사랑",
-      en: "Love"
-    },
-    category: "relationship"
-  },
-  {
-    id: "affection",
-    text: {
-      ru: "Нежность",
-      ko: "애정",
-      en: "Affection"
-    },
-    category: "relationship"
-  },
-  {
-    id: "care",
-    text: {
-      ru: "Забота",
-      ko: "돌봄",
-      en: "Care"
-    },
-    category: "relationship"
-  },
-  {
-    id: "family",
-    text: {
-      ru: "Семья",
-      ko: "가족",
-      en: "Family"
-    },
-    category: "relationship"
-  },
-  {
-    id: "friendship",
-    text: {
-      ru: "Дружба",
-      ko: "우정",
-      en: "Friendship"
-    },
-    category: "relationship"
-  },
-  {
-    id: "trust",
-    text: {
-      ru: "Доверие",
-      ko: "신뢰",
-      en: "Trust"
-    },
-    category: "relationship"
-  },
-  {
-    id: "loyalty",
-    text: {
-      ru: "Верность",
-      ko: "충실함",
-      en: "Loyalty"
-    },
-    category: "relationship"
-  },
-  {
-    id: "honesty",
-    text: {
-      ru: "Честность",
-      ko: "정직",
-      en: "Honesty"
-    },
-    category: "justice"
-  },
-  {
-    id: "sincerity",
-    text: {
-      ru: "Искренность",
-      ko: "진심",
-      en: "Sincerity"
-    },
-    category: "relationship"
-  },
-  {
-    id: "respect",
-    text: {
-      ru: "Уважение",
-      ko: "존중",
-      en: "Respect"
-    },
-    category: "relationship"
-  },
+  ["love", "Любовь", "사랑", "Love", "relationship"],
+  ["affection", "Нежность", "애정", "Affection", "relationship"],
+  ["care", "Забота", "돌봄", "Care", "relationship"],
+  ["family", "Семья", "가족", "Family", "relationship"],
+  ["friendship", "Дружба", "우정", "Friendship", "relationship"],
+  ["trust", "Доверие", "신뢰", "Trust", "relationship"],
+  ["loyalty", "Верность", "충실함", "Loyalty", "relationship"],
+  ["respect", "Уважение", "존중", "Respect", "relationship"],
+  ["sincerity", "Искренность", "진심", "Sincerity", "relationship"],
+  ["support", "Поддержка", "지지", "Support", "relationship"],
+  ["understanding", "Понимание", "이해", "Understanding", "relationship"],
+  ["empathy", "Эмпатия", "공감", "Empathy", "relationship"],
+  ["closeness", "Близость", "친밀함", "Closeness", "relationship"],
+  ["belonging", "Принадлежность", "소속감", "Belonging", "relationship"],
+  ["cooperation", "Сотрудничество", "협력", "Cooperation", "relationship"],
 
-  {
-    id: "freedom",
-    text: {
-      ru: "Свобода",
-      ko: "자유",
-      en: "Freedom"
-    },
-    category: "freedom"
-  },
-  {
-    id: "independence",
-    text: {
-      ru: "Независимость",
-      ko: "독립",
-      en: "Independence"
-    },
-    category: "freedom"
-  },
-  {
-    id: "flexibility",
-    text: {
-      ru: "Гибкость",
-      ko: "유연성",
-      en: "Flexibility"
-    },
-    category: "freedom"
-  },
-  {
-    id: "choice",
-    text: {
-      ru: "Выбор",
-      ko: "선택",
-      en: "Choice"
-    },
-    category: "freedom"
-  },
-  {
-    id: "adventure",
-    text: {
-      ru: "Приключение",
-      ko: "모험",
-      en: "Adventure"
-    },
-    category: "freedom"
-  },
+  ["freedom", "Свобода", "자유", "Freedom", "freedom"],
+  ["independence", "Независимость", "독립", "Independence", "freedom"],
+  ["choice", "Выбор", "선택", "Choice", "freedom"],
+  ["flexibility", "Гибкость", "유연성", "Flexibility", "freedom"],
+  ["adventure", "Приключение", "모험", "Adventure", "freedom"],
+  ["possibility", "Возможность", "가능성", "Possibility", "freedom"],
+  ["openness", "Открытость", "개방성", "Openness", "freedom"],
+  ["movement", "Движение", "움직임", "Movement", "freedom"],
+  ["travel", "Путешествие", "여행", "Travel", "freedom"],
+  ["discovery", "Открытие", "발견", "Discovery", "freedom"],
 
-  {
-    id: "self_respect",
-    text: {
-      ru: "Самоуважение",
-      ko: "자존감",
-      en: "Self-respect"
-    },
-    category: "self"
-  },
-  {
-    id: "dignity",
-    text: {
-      ru: "Достоинство",
-      ko: "존엄",
-      en: "Dignity"
-    },
-    category: "self"
-  },
-  {
-    id: "confidence",
-    text: {
-      ru: "Уверенность",
-      ko: "자신감",
-      en: "Confidence"
-    },
-    category: "self"
-  },
-  {
-    id: "identity",
-    text: {
-      ru: "Идентичность",
-      ko: "정체성",
-      en: "Identity"
-    },
-    category: "self"
-  },
-  {
-    id: "authenticity",
-    text: {
-      ru: "Подлинность",
-      ko: "참됨",
-      en: "Authenticity"
-    },
-    category: "self"
-  },
+  ["self_respect", "Самоуважение", "자존감", "Self-respect", "self"],
+  ["dignity", "Достоинство", "존엄", "Dignity", "self"],
+  ["confidence", "Уверенность", "자신감", "Confidence", "self"],
+  ["authenticity", "Подлинность", "참됨", "Authenticity", "self"],
+  ["identity", "Идентичность", "정체성", "Identity", "self"],
+  ["courage", "Мужество", "용기", "Courage", "self"],
+  ["determination", "Решимость", "결단력", "Determination", "self"],
+  ["inner_strength", "Внутренняя сила", "내면의 힘", "Inner strength", "self"],
+  ["acceptance", "Принятие", "수용", "Acceptance", "self"],
+  ["self_control", "Самоконтроль", "자기통제", "Self-control", "self"],
 
-  {
-    id: "growth",
-    text: {
-      ru: "Развитие",
-      ko: "성장",
-      en: "Growth"
-    },
-    category: "growth"
-  },
-  {
-    id: "learning",
-    text: {
-      ru: "Обучение",
-      ko: "배움",
-      en: "Learning"
-    },
-    category: "growth"
-  },
-  {
-    id: "curiosity",
-    text: {
-      ru: "Любопытство",
-      ko: "호기심",
-      en: "Curiosity"
-    },
-    category: "growth"
-  },
-  {
-    id: "wisdom",
-    text: {
-      ru: "Мудрость",
-      ko: "지혜",
-      en: "Wisdom"
-    },
-    category: "wisdom"
-  },
-  {
-    id: "insight",
-    text: {
-      ru: "Проницательность",
-      ko: "통찰",
-      en: "Insight"
-    },
-    category: "wisdom"
-  },
+  ["growth", "Развитие", "성장", "Growth", "growth"],
+  ["learning", "Обучение", "배움", "Learning", "growth"],
+  ["curiosity", "Любопытство", "호기심", "Curiosity", "growth"],
+  ["challenge", "Вызов", "도전", "Challenge", "growth"],
+  ["dream", "Мечта", "꿈", "Dream", "growth"],
+  ["purpose", "Предназначение", "사명", "Purpose", "growth"],
+  ["meaning", "Смысл", "의미", "Meaning", "growth"],
+  ["potential", "Потенциал", "잠재력", "Potential", "growth"],
+  ["adaptability", "Адаптивность", "적응력", "Adaptability", "growth"],
+  ["vision", "Видение", "비전", "Vision", "growth"],
 
-  {
-    id: "happiness",
-    text: {
-      ru: "Счастье",
-      ko: "행복",
-      en: "Happiness"
-    },
-    category: "emotion"
-  },
-  {
-    id: "joy",
-    text: {
-      ru: "Радость",
-      ko: "기쁨",
-      en: "Joy"
-    },
-    category: "emotion"
-  },
-  {
-    id: "fun",
-    text: {
-      ru: "Веселье",
-      ko: "재미",
-      en: "Fun"
-    },
-    category: "emotion"
-  },
-  {
-    id: "peace",
-    text: {
-      ru: "Спокойствие",
-      ko: "평온",
-      en: "Peace"
-    },
-    category: "stability"
-  },
-  {
-    id: "hope",
-    text: {
-      ru: "Надежда",
-      ko: "희망",
-      en: "Hope"
-    },
-    category: "emotion"
-  },
+  ["creativity", "Творчество", "창의성", "Creativity", "creation"],
+  ["imagination", "Воображение", "상상력", "Imagination", "creation"],
+  ["beauty", "Красота", "아름다움", "Beauty", "creation"],
+  ["expression", "Самовыражение", "자기표현", "Self-expression", "creation"],
+  ["inspiration", "Вдохновение", "영감", "Inspiration", "creation"],
+  ["originality", "Оригинальность", "독창성", "Originality", "creation"],
+  ["innovation", "Новаторство", "혁신", "Innovation", "creation"],
+  ["playfulness", "Игривость", "유희", "Playfulness", "creation"],
+  ["humor", "Юмор", "유머", "Humor", "creation"],
+  ["art", "Искусство", "예술", "Art", "creation"],
 
-  {
-    id: "creativity",
-    text: {
-      ru: "Творчество",
-      ko: "창의성",
-      en: "Creativity"
-    },
-    category: "creation"
+  ["success", "Успех", "성공", "Success", "achievement"],
+  ["achievement", "Достижение", "성취", "Achievement", "achievement"],
+  ["recognition", "Признание", "인정", "Recognition", "achievement"],
+  ["competence", "Компетентность", "능력", "Competence", "achievement"],
+  ["mastery", "Мастерство", "숙련", "Mastery", "achievement"],
+  ["discipline", "Дисциплина", "절제", "Discipline", "achievement"],
+  ["focus", "Сосредоточенность", "집중", "Focus", "achievement"],
+  ["perseverance", "Настойчивость", "끈기", "Perseverance", "achievement"],
+  ["willpower", "Сила воли", "의지", "Willpower", "achievement"],
+  ["leadership", "Лидерство", "리더십", "Leadership", "achievement"],
+
+  ["stability", "Стабильность", "안정", "Stability", "stability"],
+  ["safety", "Безопасность", "안전", "Safety", "stability"],
+  ["home", "Дом", "집", "Home", "stability"],
+  ["comfort", "Уют", "안락함", "Comfort", "stability"],
+  ["balance", "Баланс", "균형", "Balance", "stability"],
+  ["order", "Порядок", "질서", "Order", "stability"],
+  ["peace", "Спокойствие", "평온", "Peace", "stability"],
+  ["rest", "Отдых", "휴식", "Rest", "stability"],
+  ["health", "Здоровье", "건강", "Health", "stability"],
+  ["resilience", "Устойчивость", "회복탄력성", "Resilience", "stability"],
+
+  ["justice", "Справедливость", "정의", "Justice", "justice"],
+  ["fairness", "Честность правил", "공정함", "Fairness", "justice"],
+  ["equality", "Равенство", "평등", "Equality", "justice"],
+  ["responsibility", "Ответственность", "책임", "Responsibility", "justice"],
+  ["conscience", "Совесть", "양심", "Conscience", "justice"],
+  ["integrity", "Цельность", "올곧음", "Integrity", "justice"],
+  ["truth", "Правда", "진실", "Truth", "justice"],
+  ["solidarity", "Солидарность", "연대", "Solidarity", "justice"],
+  ["mercy", "Милосердие", "자비", "Mercy", "justice"],
+  ["honesty", "Честность", "정직", "Honesty", "justice"],
+
+  ["wisdom", "Мудрость", "지혜", "Wisdom", "wisdom"],
+  ["insight", "Проницательность", "통찰", "Insight", "wisdom"],
+  ["knowledge", "Знание", "지식", "Knowledge", "wisdom"],
+  ["reflection", "Размышление", "성찰", "Reflection", "wisdom"],
+  ["reason", "Разум", "이성", "Reason", "wisdom"],
+  ["discernment", "Рассудительность", "분별력", "Discernment", "wisdom"],
+  ["patience", "Терпение", "인내", "Patience", "wisdom"],
+  ["depth", "Глубина", "깊이", "Depth", "wisdom"],
+  ["mindfulness", "Осознанность", "알아차림", "Mindfulness", "wisdom"],
+  ["faith", "Вера", "믿음", "Faith", "wisdom"],
+
+  ["happiness", "Счастье", "행복", "Happiness", "emotion"],
+  ["joy", "Радость", "기쁨", "Joy", "emotion"],
+  ["fun", "Веселье", "재미", "Fun", "emotion"],
+  ["hope", "Надежда", "희망", "Hope", "emotion"],
+  ["warmth", "Тепло", "따뜻함", "Warmth", "emotion"],
+  ["lightness", "Лёгкость", "가벼움", "Lightness", "emotion"],
+  ["passion", "Страсть", "열정", "Passion", "emotion"],
+  ["delight", "Восторг", "환희", "Delight", "emotion"],
+  ["tenderness", "Ласка", "다정함", "Tenderness", "emotion"],
+  ["gratitude", "Благодарность", "감사", "Gratitude", "emotion"],
+
+  ["nature", "Природа", "자연", "Nature", "nature"],
+  ["harmony", "Гармония", "조화", "Harmony", "nature"],
+  ["silence", "Тишина", "고요", "Silence", "nature"],
+  ["simplicity", "Простота", "단순함", "Simplicity", "nature"],
+  ["purity", "Чистота", "순수함", "Purity", "nature"],
+  ["freshness", "Свежесть", "신선함", "Freshness", "nature"],
+  ["vitality", "Жизненная сила", "생명력", "Vitality", "nature"],
+  ["energy", "Энергия", "에너지", "Energy", "nature"],
+  ["space", "Пространство", "공간", "Space", "nature"],
+  ["light", "Свет", "빛", "Light", "nature"],
+
+  ["minimalism", "Минимализм", "미니멀리즘", "Minimalism", "lifestyle"],
+  ["freedom_of_time", "Свобода времени", "시간의 자유", "Freedom of time", "lifestyle"],
+  ["slow_life", "Медленная жизнь", "느린 삶", "Slow life", "lifestyle"],
+  ["richness", "Насыщенность", "충만함", "Richness", "lifestyle"],
+  ["privacy", "Личное пространство", "개인 공간", "Privacy", "lifestyle"],
+  ["ritual", "Ритуал", "의식", "Ritual", "lifestyle"],
+  ["taste", "Вкус", "취향", "Taste", "lifestyle"],
+  ["elegance", "Элегантность", "우아함", "Elegance", "lifestyle"],
+  ["moderation", "Умеренность", "절도", "Moderation", "lifestyle"],
+  ["abundance", "Изобилие", "풍요", "Abundance", "lifestyle"]
+].map(([id, ru, ko, en, category]) => ({
+  id,
+  text: { ru, ko, en },
+  category
+}));
+
+const NEGATIVE_WORDS = [
+  ["self_deprecation", "Самоунижение", "자기비하", "Self-deprecation"],
+  ["hypocrisy", "Лицемерие", "위선", "Hypocrisy"],
+  ["discrimination", "Дискриминация", "차별", "Discrimination"],
+  ["injustice", "Несправедливость", "불의", "Injustice"],
+  ["laziness", "Лень", "나태함", "Laziness"],
+  ["corruption", "Коррупция", "부패", "Corruption"],
+  ["negativity", "Негативность", "부정성", "Negativity"],
+  ["foolishness", "Глупость", "어리석음", "Foolishness"],
+  ["betrayal", "Предательство", "배신", "Betrayal"],
+  ["stereotype", "Стереотипность", "고정관념", "Stereotype"],
+  ["fear", "Страх", "두려움", "Fear"],
+  ["shame", "Стыд", "수치심", "Shame"],
+  ["guilt", "Вина", "죄책감", "Guilt"],
+  ["control", "Контроль", "통제", "Control"],
+  ["chaos", "Хаос", "혼란", "Chaos"],
+  ["emptiness", "Пустота", "공허", "Emptiness"],
+  ["loneliness", "Одиночество", "외로움", "Loneliness"],
+  ["rejection", "Отвержение", "거절", "Rejection"],
+  ["envy", "Зависть", "질투", "Envy"],
+  ["anger", "Злость", "분노", "Anger"],
+  ["apathy", "Апатия", "무기력", "Apathy"],
+  ["helplessness", "Беспомощность", "무력감", "Helplessness"],
+  ["rigidity", "Жёсткость", "경직성", "Rigidity"],
+  ["dishonesty", "Нечестность", "부정직", "Dishonesty"],
+  ["meaninglessness", "Бессмысленность", "무의미", "Meaninglessness"],
+  ["instability", "Нестабильность", "불안정", "Instability"],
+  ["dependence", "Зависимость", "의존", "Dependence"],
+  ["violence", "Насилие", "폭력", "Violence"],
+  ["cruelty", "Жестокость", "잔인함", "Cruelty"],
+  ["indifference", "Равнодушие", "무관심", "Indifference"]
+].map(([id, ru, ko, en]) => ({
+  id,
+  text: { ru, ko, en },
+  category: "shadow"
+}));
+
+const OPPOSITE_MAP = {
+  self_deprecation: ["self_respect", "dignity", "confidence", "acceptance"],
+  hypocrisy: ["authenticity", "sincerity", "honesty", "integrity"],
+  discrimination: ["equality", "respect", "justice", "openness"],
+  injustice: ["justice", "fairness", "conscience", "integrity"],
+  laziness: ["discipline", "willpower", "focus", "perseverance"],
+  corruption: ["honesty", "truth", "integrity", "responsibility"],
+  negativity: ["hope", "gratitude", "joy", "lightness"],
+  foolishness: ["wisdom", "discernment", "reflection", "reason"],
+  betrayal: ["trust", "loyalty", "sincerity", "devotion"],
+  stereotype: ["flexibility", "openness", "curiosity", "freedom"],
+  fear: ["courage", "confidence", "inner_strength", "trust"],
+  shame: ["acceptance", "dignity", "self_respect", "warmth"],
+  guilt: ["forgiveness", "acceptance", "responsibility", "mercy"],
+  control: ["freedom", "trust", "flexibility", "choice"],
+  chaos: ["order", "balance", "stability", "peace"],
+  emptiness: ["meaning", "purpose", "love", "richness"],
+  loneliness: ["belonging", "friendship", "closeness", "support"],
+  rejection: ["acceptance", "love", "respect", "belonging"],
+  envy: ["gratitude", "self_respect", "abundance", "joy"],
+  anger: ["peace", "patience", "understanding", "balance"],
+  apathy: ["passion", "energy", "purpose", "curiosity"],
+  helplessness: ["inner_strength", "confidence", "choice", "resilience"],
+  rigidity: ["flexibility", "adaptability", "openness", "playfulness"],
+  dishonesty: ["honesty", "truth", "sincerity", "integrity"],
+  meaninglessness: ["meaning", "purpose", "dream", "calling"],
+  instability: ["stability", "safety", "home", "balance"],
+  dependence: ["independence", "self_reliance", "freedom", "confidence"],
+  violence: ["peace", "respect", "care", "mercy"],
+  cruelty: ["kindness", "empathy", "mercy", "care"],
+  indifference: ["care", "empathy", "love", "responsibility"]
+};
+
+const PROMPT_MODES = {
+  reflection: {
+    ru: "Тёплый, бережный и глубокий стиль саморефлексии.",
+    ko: "따뜻하고 섬세한 자기 성찰 중심 분석.",
+    en: "Warm, gentle, and reflective analysis."
   },
-  {
-    id: "imagination",
-    text: {
-      ru: "Воображение",
-      ko: "상상력",
-      en: "Imagination"
-    },
-    category: "creation"
+  psychology: {
+    ru: "Осторожный психологический анализ мотивов, конфликтов и паттернов.",
+    ko: "동기, 갈등, 패턴 중심의 신중한 심리 분석.",
+    en: "Careful psychological analysis of motives, conflicts, and patterns."
   },
-  {
-    id: "beauty",
-    text: {
-      ru: "Красота",
-      ko: "아름다움",
-      en: "Beauty"
-    },
-    category: "creation"
+  relationship: {
+    ru: "Анализ через близость, границы, доверие и отношения.",
+    ko: "친밀감, 경계, 신뢰, 관계 중심 분석.",
+    en: "Analysis through closeness, boundaries, trust, and relationships."
   },
-  {
-    id: "expression",
-    text: {
-      ru: "Самовыражение",
-      ko: "자기표현",
-      en: "Self-expression"
-    },
-    category: "creation"
+  career: {
+    ru: "Анализ через работу, роль, сильные стороны и среду.",
+    ko: "일, 역할, 강점, 환경 중심 분석.",
+    en: "Analysis through work, roles, strengths, and environment."
   },
-  {
-    id: "inspiration",
-    text: {
-      ru: "Вдохновение",
-      ko: "영감",
-      en: "Inspiration"
-    },
-    category: "creation"
+  literary: {
+    ru: "Поэтичная интерпретация как история внутреннего пути.",
+    ko: "내면 여정의 이야기처럼 문학적이고 시적인 해석.",
+    en: "Poetic interpretation as a story of the inner journey."
   }
-];
-/* ==========================================================
-   POSITIVE WORDS
-   v2 Part 2
-   Add more positive words
-========================================================== */
-
-POSITIVE_WORDS.push(
-  {
-    id: "success",
-    text: {
-      ru: "Успех",
-      ko: "성공",
-      en: "Success"
-    },
-    category: "achievement"
-  },
-  {
-    id: "achievement",
-    text: {
-      ru: "Достижение",
-      ko: "성취",
-      en: "Achievement"
-    },
-    category: "achievement"
-  },
-  {
-    id: "ambition",
-    text: {
-      ru: "Амбиция",
-      ko: "야망",
-      en: "Ambition"
-    },
-    category: "achievement"
-  },
-  {
-    id: "recognition",
-    text: {
-      ru: "Признание",
-      ko: "인정",
-      en: "Recognition"
-    },
-    category: "achievement"
-  },
-  {
-    id: "competence",
-    text: {
-      ru: "Компетентность",
-      ko: "능력",
-      en: "Competence"
-    },
-    category: "achievement"
-  },
-  {
-    id: "mastery",
-    text: {
-      ru: "Мастерство",
-      ko: "숙련",
-      en: "Mastery"
-    },
-    category: "achievement"
-  },
-  {
-    id: "discipline",
-    text: {
-      ru: "Дисциплина",
-      ko: "절제",
-      en: "Discipline"
-    },
-    category: "achievement"
-  },
-  {
-    id: "focus",
-    text: {
-      ru: "Сосредоточенность",
-      ko: "집중",
-      en: "Focus"
-    },
-    category: "achievement"
-  },
-  {
-    id: "perseverance",
-    text: {
-      ru: "Настойчивость",
-      ko: "끈기",
-      en: "Perseverance"
-    },
-    category: "achievement"
-  },
-  {
-    id: "willpower",
-    text: {
-      ru: "Сила воли",
-      ko: "의지",
-      en: "Willpower"
-    },
-    category: "achievement"
-  },
-
-  {
-    id: "stability",
-    text: {
-      ru: "Стабильность",
-      ko: "안정",
-      en: "Stability"
-    },
-    category: "stability"
-  },
-  {
-    id: "safety",
-    text: {
-      ru: "Безопасность",
-      ko: "안전",
-      en: "Safety"
-    },
-    category: "stability"
-  },
-  {
-    id: "comfort",
-    text: {
-      ru: "Уют",
-      ko: "안락함",
-      en: "Comfort"
-    },
-    category: "stability"
-  },
-  {
-    id: "home",
-    text: {
-      ru: "Дом",
-      ko: "집",
-      en: "Home"
-    },
-    category: "stability"
-  },
-  {
-    id: "balance",
-    text: {
-      ru: "Баланс",
-      ko: "균형",
-      en: "Balance"
-    },
-    category: "stability"
-  },
-  {
-    id: "order",
-    text: {
-      ru: "Порядок",
-      ko: "질서",
-      en: "Order"
-    },
-    category: "stability"
-  },
-  {
-    id: "rhythm",
-    text: {
-      ru: "Ритм",
-      ko: "리듬",
-      en: "Rhythm"
-    },
-    category: "stability"
-  },
-  {
-    id: "rest",
-    text: {
-      ru: "Отдых",
-      ko: "휴식",
-      en: "Rest"
-    },
-    category: "stability"
-  },
-  {
-    id: "health",
-    text: {
-      ru: "Здоровье",
-      ko: "건강",
-      en: "Health"
-    },
-    category: "stability"
-  },
-  {
-    id: "resilience",
-    text: {
-      ru: "Устойчивость",
-      ko: "회복탄력성",
-      en: "Resilience"
-    },
-    category: "stability"
-  },
-
-  {
-    id: "justice",
-    text: {
-      ru: "Справедливость",
-      ko: "정의",
-      en: "Justice"
-    },
-    category: "justice"
-  },
-  {
-    id: "fairness",
-    text: {
-      ru: "Честность правил",
-      ko: "공정함",
-      en: "Fairness"
-    },
-    category: "justice"
-  },
-  {
-    id: "equality",
-    text: {
-      ru: "Равенство",
-      ko: "평등",
-      en: "Equality"
-    },
-    category: "justice"
-  },
-  {
-    id: "responsibility",
-    text: {
-      ru: "Ответственность",
-      ko: "책임",
-      en: "Responsibility"
-    },
-    category: "justice"
-  },
-  {
-    id: "conscience",
-    text: {
-      ru: "Совесть",
-      ko: "양심",
-      en: "Conscience"
-    },
-    category: "justice"
-  },
-  {
-    id: "integrity",
-    text: {
-      ru: "Цельность",
-      ko: "올곧음",
-      en: "Integrity"
-    },
-    category: "justice"
-  },
-  {
-    id: "truth",
-    text: {
-      ru: "Правда",
-      ko: "진실",
-      en: "Truth"
-    },
-    category: "justice"
-  },
-  {
-    id: "transparency",
-    text: {
-      ru: "Прозрачность",
-      ko: "투명성",
-      en: "Transparency"
-    },
-    category: "justice"
-  },
-  {
-    id: "solidarity",
-    text: {
-      ru: "Солидарность",
-      ko: "연대",
-      en: "Solidarity"
-    },
-    category: "justice"
-  },
-  {
-    id: "mercy",
-    text: {
-      ru: "Милосердие",
-      ko: "자비",
-      en: "Mercy"
-    },
-    category: "justice"
-  },
-
-  {
-    id: "calmness",
-    text: {
-      ru: "Умиротворение",
-      ko: "고요",
-      en: "Calmness"
-    },
-    category: "emotion"
-  },
-  {
-    id: "warmth",
-    text: {
-      ru: "Тепло",
-      ko: "따뜻함",
-      en: "Warmth"
-    },
-    category: "emotion"
-  },
-  {
-    id: "lightness",
-    text: {
-      ru: "Лёгкость",
-      ko: "가벼움",
-      en: "Lightness"
-    },
-    category: "emotion"
-  },
-  {
-    id: "passion",
-    text: {
-      ru: "Страсть",
-      ko: "열정",
-      en: "Passion"
-    },
-    category: "emotion"
-  },
-  {
-    id: "delight",
-    text: {
-      ru: "Восторг",
-      ko: "환희",
-      en: "Delight"
-    },
-    category: "emotion"
-  }
-);
-/* ==========================================================
-   POSITIVE WORDS
-   v2 Part 3
-========================================================== */
-
-POSITIVE_WORDS.push(
-
-  {
-    id: "dream",
-    text: {
-      ru: "Мечта",
-      ko: "꿈",
-      en: "Dream"
-    },
-    category: "growth"
-  },
-
-  {
-    id: "purpose",
-    text: {
-      ru: "Предназначение",
-      ko: "사명",
-      en: "Purpose"
-    },
-    category: "growth"
-  },
-
-  {
-    id: "meaning",
-    text: {
-      ru: "Смысл жизни",
-      ko: "삶의 의미",
-      en: "Meaning"
-    },
-    category: "growth"
-  },
-
-  {
-    id: "calling",
-    text: {
-      ru: "Призвание",
-      ko: "소명",
-      en: "Calling"
-    },
-    category: "growth"
-  },
-
-  {
-    id: "challenge",
-    text: {
-      ru: "Вызов",
-      ko: "도전",
-      en: "Challenge"
-    },
-    category: "growth"
-  },
-
-  {
-    id: "exploration",
-    text: {
-      ru: "Исследование",
-      ko: "탐험",
-      en: "Exploration"
-    },
-    category: "growth"
-  },
-
-  {
-    id: "openness",
-    text: {
-      ru: "Открытость",
-      ko: "개방성",
-      en: "Openness"
-    },
-    category: "growth"
-  },
-
-  {
-    id: "adaptability",
-    text: {
-      ru: "Адаптивность",
-      ko: "적응력",
-      en: "Adaptability"
-    },
-    category: "growth"
-  },
-
-  {
-    id: "vision",
-    text: {
-      ru: "Видение",
-      ko: "비전",
-      en: "Vision"
-    },
-    category: "growth"
-  },
-
-  {
-    id: "potential",
-    text: {
-      ru: "Потенциал",
-      ko: "잠재력",
-      en: "Potential"
-    },
-    category: "growth"
-  },
-
-
-
-  {
-    id: "humility",
-    text: {
-      ru: "Смирение",
-      ko: "겸손",
-      en: "Humility"
-    },
-    category: "self"
-  },
-
-  {
-    id: "acceptance",
-    text: {
-      ru: "Принятие",
-      ko: "수용",
-      en: "Acceptance"
-    },
-    category: "self"
-  },
-
-  {
-    id: "forgiveness",
-    text: {
-      ru: "Прощение",
-      ko: "용서",
-      en: "Forgiveness"
-    },
-    category: "self"
-  },
-
-  {
-    id: "gratitude",
-    text: {
-      ru: "Благодарность",
-      ko: "감사",
-      en: "Gratitude"
-    },
-    category: "self"
-  },
-
-  {
-    id: "mindfulness",
-    text: {
-      ru: "Осознанность",
-      ko: "알아차림",
-      en: "Mindfulness"
-    },
-    category: "self"
-  },
-
-  {
-    id: "self_control",
-    text: {
-      ru: "Самоконтроль",
-      ko: "자기통제",
-      en: "Self-control"
-    },
-    category: "self"
-  },
-
-  {
-    id: "self_reliance",
-    text: {
-      ru: "Самостоятельность",
-      ko: "자립",
-      en: "Self-reliance"
-    },
-    category: "self"
-  },
-
-  {
-    id: "inner_strength",
-    text: {
-      ru: "Внутренняя сила",
-      ko: "내면의 힘",
-      en: "Inner Strength"
-    },
-    category: "self"
-  },
-
-  {
-    id: "courage",
-    text: {
-      ru: "Мужество",
-      ko: "용기",
-      en: "Courage"
-    },
-    category: "self"
-  },
-
-  {
-    id: "determination",
-    text: {
-      ru: "Решимость",
-      ko: "결단력",
-      en: "Determination"
-    },
-    category: "self"
-  },
-
-
-
-  {
-    id: "cooperation",
-    text: {
-      ru: "Сотрудничество",
-      ko: "협력",
-      en: "Cooperation"
-    },
-    category: "relationship"
-  },
-
-  {
-    id: "support",
-    text: {
-      ru: "Поддержка",
-      ko: "지지",
-      en: "Support"
-    },
-    category: "relationship"
-  },
-
-  {
-    id: "understanding",
-    text: {
-      ru: "Понимание",
-      ko: "이해",
-      en: "Understanding"
-    },
-    category: "relationship"
-  },
-
-  {
-    id: "empathy",
-    text: {
-      ru: "Эмпатия",
-      ko: "공감",
-      en: "Empathy"
-    },
-    category: "relationship"
-  },
-
-  {
-    id: "generosity",
-    text: {
-      ru: "Щедрость",
-      ko: "너그러움",
-      en: "Generosity"
-    },
-    category: "relationship"
-  },
-
-  {
-    id: "hospitality",
-    text: {
-      ru: "Гостеприимство",
-      ko: "환대",
-      en: "Hospitality"
-    },
-    category: "relationship"
-  },
-
-  {
-    id: "devotion",
-    text: {
-      ru: "Преданность",
-      ko: "헌신",
-      en: "Devotion"
-    },
-    category: "relationship"
-  },
-
-  {
-    id: "unity",
-    text: {
-      ru: "Единство",
-      ko: "하나됨",
-      en: "Unity"
-    },
-    category: "relationship"
-  },
-
-  {
-    id: "community",
-    text: {
-      ru: "Сообщество",
-      ko: "공동체",
-      en: "Community"
-    },
-    category: "relationship"
-  },
-
-  {
-    id: "belonging",
-    text: {
-      ru: "Принадлежность",
-      ko: "소속감",
-      en: "Belonging"
-    },
-    category: "relationship"
-  }
-
-);
-/* ==========================================================
-   POSITIVE WORDS
-   v2 Part 4
-========================================================== */
-
-POSITIVE_WORDS.push(
-
-  /* ---------- Nature ---------- */
-
-  {
-    id: "nature",
-    text: {
-      ru: "Природа",
-      ko: "자연",
-      en: "Nature"
-    },
-    category: "stability"
-  },
-
-  {
-    id: "harmony",
-    text: {
-      ru: "Гармония",
-      ko: "조화",
-      en: "Harmony"
-    },
-    category: "stability"
-  },
-
-  {
-    id: "silence",
-    text: {
-      ru: "Тишина",
-      ko: "고요",
-      en: "Silence"
-    },
-    category: "stability"
-  },
-
-  {
-    id: "simplicity",
-    text: {
-      ru: "Простота",
-      ko: "단순함",
-      en: "Simplicity"
-    },
-    category: "stability"
-  },
-
-  {
-    id: "purity",
-    text: {
-      ru: "Чистота",
-      ko: "순수함",
-      en: "Purity"
-    },
-    category: "stability"
-  },
-
-  {
-    id: "freshness",
-    text: {
-      ru: "Свежесть",
-      ko: "신선함",
-      en: "Freshness"
-    },
-    category: "stability"
-  },
-
-  {
-    id: "vitality",
-    text: {
-      ru: "Жизненная сила",
-      ko: "생명력",
-      en: "Vitality"
-    },
-    category: "stability"
-  },
-
-  {
-    id: "energy",
-    text: {
-      ru: "Энергия",
-      ko: "에너지",
-      en: "Energy"
-    },
-    category: "stability"
-  },
-
-
-
-  /* ---------- Leadership ---------- */
-
-  {
-    id: "leadership",
-    text: {
-      ru: "Лидерство",
-      ko: "리더십",
-      en: "Leadership"
-    },
-    category: "achievement"
-  },
-
-  {
-    id: "initiative",
-    text: {
-      ru: "Инициативность",
-      ko: "주도성",
-      en: "Initiative"
-    },
-    category: "achievement"
-  },
-
-  {
-    id: "influence",
-    text: {
-      ru: "Влияние",
-      ko: "영향력",
-      en: "Influence"
-    },
-    category: "achievement"
-  },
-
-  {
-    id: "service",
-    text: {
-      ru: "Служение",
-      ko: "섬김",
-      en: "Service"
-    },
-    category: "achievement"
-  },
-
-  {
-    id: "contribution",
-    text: {
-      ru: "Вклад",
-      ko: "기여",
-      en: "Contribution"
-    },
-    category: "achievement"
-  },
-
-
-
-  /* ---------- Creativity ---------- */
-
-  {
-    id: "innovation",
-    text: {
-      ru: "Новаторство",
-      ko: "혁신",
-      en: "Innovation"
-    },
-    category: "creation"
-  },
-
-  {
-    id: "originality",
-    text: {
-      ru: "Оригинальность",
-      ko: "독창성",
-      en: "Originality"
-    },
-    category: "creation"
-  },
-
-  {
-    id: "curious_mind",
-    text: {
-      ru: "Любознательность",
-      ko: "탐구심",
-      en: "Inquisitiveness"
-    },
-    category: "creation"
-  },
-
-  {
-    id: "playfulness",
-    text: {
-      ru: "Игривость",
-      ko: "유희",
-      en: "Playfulness"
-    },
-    category: "creation"
-  },
-
-  {
-    id: "humor",
-    text: {
-      ru: "Юмор",
-      ko: "유머",
-      en: "Humor"
-    },
-    category: "creation"
-  },
-
-
-
-  /* ---------- Wisdom ---------- */
-
-  {
-    id: "knowledge",
-    text: {
-      ru: "Знание",
-      ko: "지식",
-      en: "Knowledge"
-    },
-    category: "wisdom"
-  },
-
-  {
-    id: "understanding_deep",
-    text: {
-      ru: "Глубина",
-      ko: "깊이",
-      en: "Depth"
-    },
-    category: "wisdom"
-  },
-
-  {
-    id: "reflection",
-    text: {
-      ru: "Размышление",
-      ko: "성찰",
-      en: "Reflection"
-    },
-    category: "wisdom"
-  },
-
-  {
-    id: "reason",
-    text: {
-      ru: "Разум",
-      ko: "이성",
-      en: "Reason"
-    },
-    category: "wisdom"
-  },
-
-  {
-    id: "discernment",
-    text: {
-      ru: "Рассудительность",
-      ko: "분별력",
-      en: "Discernment"
-    },
-    category: "wisdom"
-  },
-
-
-
-  /* ---------- Spiritual ---------- */
-
-  {
-    id: "faith",
-    text: {
-      ru: "Вера",
-      ko: "믿음",
-      en: "Faith"
-    },
-    category: "wisdom"
-  },
-
-  {
-    id: "hope_spiritual",
-    text: {
-      ru: "Духовная надежда",
-      ko: "영적 희망",
-      en: "Spiritual Hope"
-    },
-    category: "wisdom"
-  },
-
-  {
-    id: "inner_peace",
-    text: {
-      ru: "Внутренний мир",
-      ko: "내적 평화",
-      en: "Inner Peace"
-    },
-    category: "wisdom"
-  },
-
-  {
-    id: "compassion_spiritual",
-    text: {
-      ru: "Милосердие души",
-      ko: "영혼의 자비",
-      en: "Compassion"
-    },
-    category: "wisdom"
-  },
-
-
-
-  /* ---------- Freedom ---------- */
-
-  {
-    id: "independence_spirit",
-    text: {
-      ru: "Свободный дух",
-      ko: "자유로운 영혼",
-      en: "Free Spirit"
-    },
-    category: "freedom"
-  },
-
-  {
-    id: "travel",
-    text: {
-      ru: "Путешествия",
-      ko: "여행",
-      en: "Travel"
-    },
-    category: "freedom"
-  },
-
-  {
-    id: "discovery",
-    text: {
-      ru: "Открытия",
-      ko: "발견",
-      en: "Discovery"
-    },
-    category: "freedom"
-  },
-
-  {
-    id: "possibility",
-    text: {
-      ru: "Возможности",
-      ko: "가능성",
-      en: "Possibility"
-    },
-    category: "freedom"
-  },
-
-  {
-    id: "future",
-    text: {
-      ru: "Будущее",
-      ko: "미래",
-      en: "Future"
-    },
-    category: "freedom"
-  }
-
-);
+};
+
+const getWordText = (word, lang = UI_LANG) => word?.text?.[lang] || word?.text?.ru || "";
+const getPositiveById = (id) => POSITIVE_WORDS.find((word) => word.id === id);
+const getNegativeById = (id) => NEGATIVE_WORDS.find((word) => word.id === id);
