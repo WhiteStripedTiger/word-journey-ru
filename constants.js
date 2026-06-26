@@ -1,17 +1,15 @@
 /* ==========================================================
-   Внутренний Компас
+   Inner Compass
    constants.js
-   Stable Lexicon Version 1.0
+   Stable Lexicon Version 1.1
 ========================================================== */
 
 const APP = {
-  name: "Внутренний Компас",
-  version: "1.0.0",
+  name: "Inner Compass",
+  version: "1.1.0",
   defaultLanguage: "ru",
   supportedLanguages: ["ru", "ko", "en"]
 };
-
-const UI_LANG = "ru";
 
 const CATEGORIES = {
   relationship: { ru: "Отношения", ko: "관계", en: "Relationships" },
@@ -135,6 +133,8 @@ const POSITIVE_WORDS = [
   ["closeness", "Близость", "친밀함", "Closeness", "relationship"],
   ["belonging", "Принадлежность", "소속감", "Belonging", "relationship"],
   ["cooperation", "Сотрудничество", "협력", "Cooperation", "relationship"],
+  ["devotion", "Преданность", "헌신", "Devotion", "relationship"],
+  ["kindness", "Доброта", "다정함", "Kindness", "relationship"],
 
   ["freedom", "Свобода", "자유", "Freedom", "freedom"],
   ["independence", "Независимость", "독립", "Independence", "freedom"],
@@ -157,6 +157,8 @@ const POSITIVE_WORDS = [
   ["inner_strength", "Внутренняя сила", "내면의 힘", "Inner strength", "self"],
   ["acceptance", "Принятие", "수용", "Acceptance", "self"],
   ["self_control", "Самоконтроль", "자기통제", "Self-control", "self"],
+  ["self_reliance", "Самостоятельность", "자립", "Self-reliance", "self"],
+  ["forgiveness", "Прощение", "용서", "Forgiveness", "self"],
 
   ["growth", "Развитие", "성장", "Growth", "growth"],
   ["learning", "Обучение", "배움", "Learning", "growth"],
@@ -165,6 +167,7 @@ const POSITIVE_WORDS = [
   ["dream", "Мечта", "꿈", "Dream", "growth"],
   ["purpose", "Предназначение", "사명", "Purpose", "growth"],
   ["meaning", "Смысл", "의미", "Meaning", "growth"],
+  ["calling", "Призвание", "소명", "Calling", "growth"],
   ["potential", "Потенциал", "잠재력", "Potential", "growth"],
   ["adaptability", "Адаптивность", "적응력", "Adaptability", "growth"],
   ["vision", "Видение", "비전", "Vision", "growth"],
@@ -360,6 +363,11 @@ const PROMPT_MODES = {
   }
 };
 
-const getWordText = (word, lang = UI_LANG) => word?.text?.[lang] || word?.text?.ru || "";
-const getPositiveById = (id) => POSITIVE_WORDS.find((word) => word.id === id);
-const getNegativeById = (id) => NEGATIVE_WORDS.find((word) => word.id === id);
+const getWordText = (word, lang = UI_LANG) =>
+  word?.text?.[lang] || word?.text?.ru || "";
+
+const getPositiveById = (id) =>
+  POSITIVE_WORDS.find((word) => word.id === id);
+
+const getNegativeById = (id) =>
+  NEGATIVE_WORDS.find((word) => word.id === id);
