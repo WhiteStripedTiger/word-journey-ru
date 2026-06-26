@@ -3,42 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Внутренний Компас</title>
+  <meta
+    name="description"
+    content="Внутренний Компас — упражнение для выбора ключевых слов, саморефлексии и AI-анализа внутреннего пути."
+  />
 
   <link rel="stylesheet" href="style.css" />
-  <script src="constants.js" defer></script> 
+
+  <script src="constants.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 
 <body>
-  <main class="app">
+  <main class="app" id="app">
 
+    <!-- INTRO -->
     <section id="introScreen" class="screen active">
       <div class="card hero-card">
         <p class="eyebrow">Внутренний Компас</p>
+
         <h1>Пять слов, которые сейчас ведут вас</h1>
+
         <p class="lead">
-          Это упражнение поможет выбрать главные слова через несколько этапов:
-          притяжение, отбор, тень, противоположность и финальный выбор.
+          Пройдите путь выбора слов: притяжение, отбор, тень,
+          противоположность и финальный внутренний компас.
         </p>
 
         <div class="notice">
           <p><strong>Важно:</strong> это не психологический тест и не диагноз.</p>
-          <p>Это инструмент для саморефлексии и разговора с собой.</p>
+          <p>Это упражнение для саморефлексии и бережного разговора с собой.</p>
         </div>
 
-        <button id="startBtn" class="btn primary">Начать путешествие</button>
+        <button id="startBtn" class="btn primary full">
+          Начать путешествие
+        </button>
       </div>
     </section>
 
+    <!-- JOURNEY -->
     <section id="journeyScreen" class="screen">
       <header class="journey-header">
         <div>
-          <p id="stageLabel" class="stage-label">Шаг 1</p>
+          <p id="stageLabel" class="stage-label">Шаг 1 / 8</p>
           <h2 id="stageTitle">Выберите слова</h2>
         </div>
-        <button id="resetBtn" class="btn small ghost">Сначала</button>
+
+        <button id="resetBtn" class="btn small ghost">
+          Сначала
+        </button>
       </header>
+
+      <div class="flow-tabs" aria-label="Journey flow">
+        <span id="flowPositive" class="flow-tab active">Притяжение</span>
+        <span id="flowNegative" class="flow-tab">Тень</span>
+        <span id="flowOpposite" class="flow-tab">Противоположность</span>
+        <span id="flowFinal" class="flow-tab">Финал</span>
+      </div>
 
       <div class="progress">
         <div id="progressBar" class="progress-bar"></div>
@@ -50,71 +72,168 @@
         <div class="status-pill">
           <span id="selectionCounter">0 / 20</span>
         </div>
+
         <div class="status-pill muted">
           <span id="timerText">00:00</span>
         </div>
       </div>
 
-      <div id="wordGrid" class="word-grid"></div>
+      <section id="wordGrid" class="word-grid" aria-label="Word choices"></section>
 
-      <div id="oppositePanel" class="opposite-panel hidden">
+      <section id="oppositePanel" class="opposite-panel hidden">
         <p class="panel-title">Выберите противоположное слово</p>
         <p id="currentNegativeWord" class="current-negative"></p>
         <div id="oppositeOptions" class="opposite-options"></div>
-      </div>
+      </section>
 
       <nav class="bottom-nav">
-        <button id="backBtn" class="btn secondary">Назад</button>
-        <button id="nextBtn" class="btn primary" disabled>Далее</button>
+        <button id="backBtn" class="btn secondary">
+          Назад
+        </button>
+
+        <button id="nextBtn" class="btn primary" disabled>
+          Далее
+        </button>
       </nav>
     </section>
 
+    <!-- RESULT -->
     <section id="resultScreen" class="screen">
       <div class="card result-card">
         <p class="eyebrow">Результат</p>
+
         <h1>Ваши пять слов</h1>
 
         <div id="finalWords" class="final-words"></div>
 
-        <div class="summary-grid">
-          <div class="summary-card">
-            <span class="summary-label">Общее время</span>
-            <strong id="totalDuration">—</strong>
-          </div>
-          <div class="summary-card">
-            <span class="summary-label">Самый долгий этап</span>
-            <strong id="slowestStage">—</strong>
-          </div>
-          <div class="summary-card">
-            <span class="summary-label">Больше всего колебаний</span>
-            <strong id="mostToggledStage">—</strong>
-          </div>
-        </div>
+        <!-- SUMMARY -->
+        <section class="result-section">
+          <h2>Краткое резюме пути</h2>
 
+          <div class="summary-grid">
+            <div class="summary-card">
+              <span class="summary-label">Общее время</span>
+              <strong id="totalDuration">—</strong>
+            </div>
+
+            <div class="summary-card">
+              <span class="summary-label">Самый долгий этап</span>
+              <strong id="slowestStage">—</strong>
+            </div>
+
+            <div class="summary-card">
+              <span class="summary-label">Больше всего колебаний</span>
+              <strong id="mostToggledStage">—</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- AI MODE -->
+        <section class="result-section">
+          <h2>Режим AI-анализа</h2>
+
+          <p class="helper-text">
+            Выберите стиль интерпретации. Данные останутся теми же,
+            изменится только способ анализа.
+          </p>
+
+          <div class="mode-grid" id="analysisModeGrid">
+            <button class="mode-card active" data-mode="reflection">
+              <strong>🌿 Рефлексия</strong>
+              <span>Тёплый и бережный разбор</span>
+            </button>
+
+            <button class="mode-card" data-mode="psychology">
+              <strong>🧠 Психология</strong>
+              <span>Мотивы, конфликты, паттерны</span>
+            </button>
+
+            <button class="mode-card" data-mode="relationship">
+              <strong>❤️ Отношения</strong>
+              <span>Близость, границы, связь</span>
+            </button>
+
+            <button class="mode-card" data-mode="career">
+              <strong>💼 Карьера</strong>
+              <span>Работа, роль, сильные стороны</span>
+            </button>
+
+            <button class="mode-card" data-mode="literary">
+              <strong>✍️ Литературно</strong>
+              <span>Поэтичная история человека</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- PROMPT -->
         <section class="result-section">
           <h2>Промпт для анализа</h2>
+
           <p class="helper-text">
-            Скопируйте этот текст и отправьте его ChatGPT, чтобы получить глубокую интерпретацию.
+            Скопируйте этот текст и отправьте его ChatGPT или другой AI-системе.
           </p>
-          <textarea id="promptOutput" readonly></textarea>
-          <button id="copyPromptBtn" class="btn secondary full">Скопировать промпт</button>
+
+          <pre class="code-box"><code id="promptOutput"></code></pre>
+
+          <button id="copyPromptBtn" class="btn secondary full">
+            Скопировать промпт
+          </button>
         </section>
 
+        <!-- JSON -->
         <section class="result-section">
-          <h2>Данные путешествия</h2>
-          <p class="helper-text">
-            Эти данные показывают не только итоговый выбор, но и путь: время, этапы и изменения.
-          </p>
-          <textarea id="jsonOutput" readonly></textarea>
-          <button id="copyJsonBtn" class="btn secondary full">Скопировать JSON</button>
+          <details class="details-box" open>
+            <summary>Данные путешествия JSON</summary>
+
+            <p class="helper-text">
+              Эти данные включают итоговые слова, этапы, время, переключения и путь выбора.
+            </p>
+
+            <pre class="code-box"><code id="jsonOutput"></code></pre>
+
+            <button id="copyJsonBtn" class="btn secondary full">
+              Скопировать JSON
+            </button>
+          </details>
         </section>
 
-        <button id="copyAllBtn" class="btn primary full">Скопировать всё</button>
-        <button id="restartBtn" class="btn ghost full">Пройти заново</button>
+        <!-- TIMELINE -->
+        <section class="result-section">
+          <details class="details-box">
+            <summary>Decision Timeline</summary>
+
+            <p class="helper-text">
+              Хронология выбора слов. Полезно для более глубокого анализа и отладки.
+            </p>
+
+            <div id="timelineOutput" class="timeline-output"></div>
+          </details>
+        </section>
+
+        <!-- DEVELOPER PANEL -->
+        <section class="result-section">
+          <details class="details-box">
+            <summary>Developer Data</summary>
+
+            <p class="helper-text">
+              Техническая аналитика: счётчики, стадии, категории и служебные данные.
+            </p>
+
+            <pre class="code-box"><code id="developerOutput"></code></pre>
+          </details>
+        </section>
+
+        <button id="copyAllBtn" class="btn primary full">
+          Скопировать всё
+        </button>
+
+        <button id="restartBtn" class="btn ghost full">
+          Пройти заново
+        </button>
 
         <p class="disclaimer">
-          Анализ на основе этих данных должен использоваться только для саморефлексии.
-          Он не заменяет консультацию специалиста.
+          Интерпретация по этим данным предназначена только для саморефлексии.
+          Она не является диагнозом и не заменяет помощь специалиста.
         </p>
       </div>
     </section>
