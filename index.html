@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Journey RU</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <main class="app">
+    <section id="screen-intro" class="screen active">
+      <div class="hero">
+        <p class="eyebrow">Word Journey RU</p>
+        <h1>Путешествие к своим главным словам</h1>
+        <p class="lead">
+          Выберите слова, которые откликаются вам сейчас.
+          В конце вы получите пять слов, отражающих ваше внутреннее направление.
+        </p>
+
+        <div class="info-card">
+          <p><strong>Время:</strong> 5–10 минут</p>
+          <p><strong>Формат:</strong> выбор слов по шагам</p>
+          <p><strong>Совет:</strong> отвечайте интуитивно, не слишком долго думая.</p>
+        </div>
+
+        <button id="startBtn" class="primary-btn">Начать</button>
+      </div>
+    </section>
+
+    <section id="screen-game" class="screen">
+      <header class="topbar">
+        <div>
+          <p id="stepLabel" class="step-label">Шаг 1</p>
+          <h2 id="stepTitle">Выберите слова</h2>
+        </div>
+        <button id="resetBtn" class="ghost-btn">Сначала</button>
+      </header>
+
+      <div class="progress-wrap">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <p id="stepDescription" class="description"></p>
+
+      <div class="counter-card">
+        <span id="counterText">0 / 20</span>
+      </div>
+
+      <div id="wordGrid" class="word-grid"></div>
+
+      <div class="bottom-actions">
+        <button id="backBtn" class="secondary-btn">Назад</button>
+        <button id="nextBtn" class="primary-btn" disabled>Далее</button>
+      </div>
+    </section>
+
+    <section id="screen-result" class="screen">
+      <div class="result-wrap">
+        <p class="eyebrow">Ваш результат</p>
+        <h1>Пять слов вашего пути</h1>
+        <p class="lead">
+          Эти слова не являются диагнозом или окончательным ответом.
+          Это мягкая подсказка о том, что сейчас важно для вас.
+        </p>
+
+        <div id="resultWords" class="result-words"></div>
+
+        <div class="result-note">
+          <h3>Как с этим работать?</h3>
+          <p>
+            Выберите одно слово и спросите себя:
+            «Что я могу сделать сегодня, чтобы приблизиться к этому состоянию?»
+          </p>
+        </div>
+
+        <button id="copyBtn" class="secondary-btn">Скопировать результат</button>
+        <button id="restartBtn" class="primary-btn">Пройти ещё раз</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
